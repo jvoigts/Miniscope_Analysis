@@ -35,9 +35,9 @@ green(:,:,2) = ttt;
 %being analyzed
 
 %The values below are the length of half of the side of a square.
-window.size =  20; %The window size to run pixel correlations on
-time.size = 20; %The size of the window of bright spot timings to use
-seg.initialSize = 2; %initial size of pixel box to include in pixel group G_px
+window.size =  25; %The window size to run pixel correlations on
+time.size = 40; %The size of the window of bright spot timings to use
+seg.initialSize = 3; %initial size of pixel box to include in pixel group G_px
 %--------------------------------------------------------------------------
 
 % kernal used for eroding and dilating
