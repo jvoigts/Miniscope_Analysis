@@ -6,7 +6,11 @@ decayTime = 1;
 
 V.Ncells = 1;%ms.numSegments;
 V.T = ms.numFrames;
+try
 V.dt = mode(diff(ms.time))/1000;
+catch
+   V.dt =  1/ms.vidObj{1}.FrameRate;
+end;
 V.fast_plot = 0;
 
 for segNum=1:ms.numSegments
