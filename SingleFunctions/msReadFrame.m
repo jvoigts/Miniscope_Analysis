@@ -8,6 +8,10 @@ function frame = msReadFrame(ms,frameNum,columnCorrect, align, dFF)
 
     if (columnCorrect)
         frame = frame - ms.columnCorrection + ms.columnCorrectionOffset;
+        frame = frame - ms.rowCorrection + ms.rowCorrectionOffset;
+        
+        fl=fspecial('gaussian',11,3); fl=fl./sum(fl(:));
+        frame=conv2(frame,fl,'same');
     end
     if (align)
         frame = frame(((max(ms.hShift(:,ms.selectedAlignment))+1):(end+min(ms.hShift(:,ms.selectedAlignment))-1))-ms.hShift(frameNum,ms.selectedAlignment), ...

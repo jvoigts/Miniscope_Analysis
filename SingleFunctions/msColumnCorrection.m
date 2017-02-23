@@ -15,4 +15,21 @@ function vidObj = msColumnCorrection(vidObj,downSamp)
     % creates correction frame used to remove ADC noise
     vidObj.columnCorrection = round(repmat(mean(meanFrame/count,1),vidObj.height,1));
     vidObj.columnCorrectionOffset = mean(vidObj.columnCorrection(:));
+    
+    
+    meanFrame = zeros(vidObj.height,vidObj.width); %allocate memory
+    count = 0;
+    for frameNum=1:downSamp:vidObj.numFrames
+        count = count + 1;
+        meanFrame = meanFrame + double(msReadFrame(vidObj,frameNum,false,false,false));
+        if (mod(frameNum,1+100*downSamp)==0)
+            display(['Calculating row correction. ' num2str(frameNum/vidObj.numFrames*100) '% done'])
+        end
+    end
+    
+    % creates correction frame used to remove ADC noise
+    vidObj.rowCorrection =  round(repmat(mean(meanFrame/count,2),1,vidObj.width));
+    vidObj.rowCorrectionOffset = mean(vidObj.rowCorrection(:));
+    
+    
 end
