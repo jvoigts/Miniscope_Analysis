@@ -20,7 +20,7 @@ end
 
 
 %smoothing kernal
-hSmall = fspecial('average', 3);
+hSmall = fspecial('average', 8);
 hLarge = fspecial('average', 60);
 
 red = cat(3, ones(vidObj.alignedHeight(vidObj.selectedAlignment),vidObj.alignedWidth(vidObj.selectedAlignment)), ...
@@ -52,6 +52,12 @@ for startFrameNum=frameLimits(1):stepSize:min([frameLimits(2) vidObj.numFrames-s
         frame(:,:,count) =filter2(hSmall,msReadFrame(vidObj,frameNum,true,true,true));
     end
     frameMax = max(frame,[],3);
+    
+    b=5;
+    frameMax([1:b,end-b:end],:)=0;
+    frameMax(:,[1:b,end-b:end])=0;
+    
+    
     frameBase = filter2(hLarge,frameMax);
     %----------------------------------------------------------------------
     
